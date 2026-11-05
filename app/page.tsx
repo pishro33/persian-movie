@@ -3,7 +3,7 @@ import {useMemo,useState} from "react";
 import Link from "next/link";
 import {Menu, X, Search} from "lucide-react";
 const movies=[
- {id:"taxidermy",title:"Taxidermy",titleFa:"تاکسیدرمی",year:"2024",cat:"Drama",style:""},
+ {id:"taxidermy",title:"Taxidermy",titleFa:"تاکسیدرمی",year:"2026",cat:"Comedy",style:""},
  {id:"last-window",title:"The Last Window",titleFa:"آخرین پنجره",year:"2025",cat:"Mystery",style:"p2"},
  {id:"blue-hour",title:"Blue Hour",titleFa:"ساعت آبی",year:"2024",cat:"Drama",style:"p3"},
  {id:"desert-road",title:"Desert Road",titleFa:"جادهٔ کویر",year:"2025",cat:"Adventure",style:"p4"},
