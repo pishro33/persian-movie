@@ -1,0 +1,9 @@
+import Link from "next/link";
+import {ArrowLeft,Play,Star} from "lucide-react";
+export default async function MoviePage({params}:{params:Promise<{slug:string}>}){
+ const {slug}=await params;const title=slug.split("-").map(w=>w[0]?.toUpperCase()+w.slice(1)).join(" ");
+ return <main className="shell"><div className="wrap"><header className="header"><Link className="brand" href="/">Persian<b>Movie</b></Link><nav className="nav"><Link href="/">Home</Link><Link href="/#movies">Movies</Link></nav><Link href="/" className="eyebrow"><ArrowLeft size={14}/> Back</Link></header>
+ <section style={{padding:"48px 0 25px"}}><div className="eyebrow">Movie details · Iranian cinema</div><h1 style={{fontSize:"clamp(36px,6vw,58px)",margin:"14px 0"}}>{title}</h1><p className="copy">2024　·　Drama　·　<Star size={13} style={{display:"inline",color:"#f4d99b"}}/> 7.8 / 10</p><p className="copy">Discover the story, cast, and details of this movie. Verified film information and authorized playback will be connected in a later step.</p></section>
+ <section style={{minHeight:300,border:"1px solid var(--line)",borderRadius:20,background:"#030711",display:"grid",placeItems:"center",textAlign:"center",padding:25}}><div><div style={{fontSize:38,color:"var(--accent)"}}><Play/></div><h2>Playback area</h2><p className="copy">The original player is not connected yet. Only an authorized stream can be embedded here.</p></div></section>
+ <section style={{padding:"35px 0 75px",maxWidth:720}}><div className="eyebrow">About this movie</div><h2>Synopsis</h2><p className="copy">Movie description and verified credits will appear here. The layout keeps viewing and essential information easy to find on mobile and desktop.</p><Link href="/#movies" className="cta">Explore more movies</Link></section><footer className="footer">© 2026 Persian Movie</footer></div></main>;
+}
