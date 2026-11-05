@@ -1,10 +1,10 @@
 import Link from "next/link";
-import {ArrowLeft,Play,Star} from "lucide-react";
+import {ArrowLeft,Play} from "lucide-react";
 const titles:Record<string,string>={"taxidermy":"تاکسیدرمی","last-window":"آخرین پنجره","blue-hour":"ساعت آبی","desert-road":"جادهٔ کویر","quiet-city":"شهر خاموش","second-sun":"خورشید دوم","midnight-letter":"نامهٔ نیمه‌شب","winter-garden":"باغ زمستانی"};
 export default async function MoviePage({params}:{params:Promise<{slug:string}>}){
  const {slug}=await params;const title=titles[slug]??"فیلم";
  return <main className="shell"><div className="wrap"><header className="header"><Link className="brand" href="/">Persian<b>Movie</b></Link><nav className="nav"><Link href="/">خانه</Link><Link href="/#movies">فیلم‌ها</Link></nav><Link href="/" className="eyebrow"><ArrowLeft size={14}/> بازگشت</Link></header>
- <section style={{padding:"48px 0 25px"}}><div className="eyebrow">جزئیات فیلم · سینمای ایران</div><h1 dir="rtl" style={{fontSize:"clamp(36px,6vw,58px)",margin:"14px 0"}}>{title}</h1><p className="copy">۲۰۲۴　·　درام　·　<Star size={13} style={{display:"inline",color:"#f4d99b"}}/> ۷٫۸ / ۱۰</p><p className="copy">اطلاعات داستان، بازیگران و جزئیات این فیلم در این بخش نمایش داده می‌شود.</p></section>
+ <section style={{padding:"48px 0 25px"}}><div className="eyebrow">جزئیات فیلم · سینمای ایران</div><h1 dir="rtl" style={{fontSize:"clamp(36px,6vw,58px)",margin:"14px 0"}}>{title}</h1><p className="copy">۲۰۲۶　·　کمدی</p><p className="copy">اطلاعات تکمیلی این عنوان هنوز از آرشیو دریافت نشده است.</p></section>
  <section style={{minHeight:300,border:"1px solid var(--line)",borderRadius:20,background:"#030711",display:"grid",placeItems:"center",textAlign:"center",padding:25}}><div><div style={{fontSize:38,color:"var(--accent)"}}><Play/></div><h2>پخش فیلم</h2><p className="copy">پخش‌کننده هنوز متصل نشده است. در این بخش فقط محتوای دارای مجوز پخش قرار می‌گیرد.</p></div></section>
  <section style={{padding:"35px 0 75px",maxWidth:720}}><div className="eyebrow">دربارهٔ فیلم</div><h2>خلاصه داستان</h2><p className="copy">خلاصه داستان و عوامل فیلم پس از اتصال اطلاعات معتبر نمایش داده خواهند شد.</p><Link href="/#movies" className="cta">دیدن فیلم‌های بیشتر</Link></section><footer className="footer">© 2026 Persian Movie</footer></div></main>;
 }
