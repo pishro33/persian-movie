@@ -32,10 +32,10 @@ type SearchResult = { poster_path: string | null; title?: string; original_title
 function normalizeTitle(value: string) {
   return value.toLocaleLowerCase()
     .normalize("NFKD")
-    .replace(/[\\u0640\\u064B-\\u065F\\u0670]/g, "")
+    .replace(/[\u0640\u064B-\u065F\u0670]/g, "")
     .replace(/[يى]/g, "ی")
     .replace(/[ك]/g, "ک")
-    .replace(/[^\\p{L}\\p{N}]+/gu, "");
+    .replace(/[^\p{L}\p{N}]+/gu, "");
 }
 
 async function findPoster(queryText: string, language: string, token: string) {
