@@ -32,7 +32,9 @@ const cats=["All","Comedy","Drama","Family","Thriller","Mystery","Social","Crime
 const catFa:Record<string,string>={Comedy:"کمدی",Drama:"درام",Family:"خانوادگی",Thriller:"هیجان‌انگیز",Mystery:"معمایی",Social:"اجتماعی",Crime:"جنایی",Documentary:"مستند",Theatre:"تئاتر"};
 const pageSize=8;
 export default function Home(){
- const [cat,setCat]=useState("All"),[query,setQuery]=useState(""),[open,setOpen]=useState(false),[page,setPage]=useState(1);\n const [posters,setPosters]=useState<Record<string,string|null>>({});\n useEffect(()=>{const ids=movies.map(m=>m.id).join(",");fetch(`/api/tmdb?ids=${encodeURIComponent(ids)}`).then(r=>r.ok?r.json():{}).then(data=>setPosters(data)).catch(()=>setPosters({}));},[]);
+ const [cat,setCat]=useState("All"),[query,setQuery]=useState(""),[open,setOpen]=useState(false),[page,setPage]=useState(1);
+ const [posters,setPosters]=useState<Record<string,string|null>>({});
+ useEffect(()=>{const ids=movies.map(m=>m.id).join(",");fetch(`/api/tmdb?ids=${encodeURIComponent(ids)}`).then(r=>r.ok?r.json():{}).then(data=>setPosters(data)).catch(()=>setPosters({}));},[]);
  const filtered=useMemo(()=>movies.filter(m=>(cat==="All"||m.cat.split(", ").includes(cat))&&(`${m.title} ${m.titleFa}`.toLowerCase().includes(query.toLowerCase()))),[cat,query]);
  const pages=Math.max(1,Math.ceil(filtered.length/pageSize));
  const shown=filtered.slice((page-1)*pageSize,page*pageSize);
