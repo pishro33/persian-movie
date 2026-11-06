@@ -27,23 +27,38 @@ const movies: Record<string, { fa: string; en: string }> = {
   "nekbat-theatre": { fa: "نکبت", en: "Nekbat" },
 };
 
-type SearchResult = { poster_path: string | null; title: string; original_title: string };
+type SearchResult = { poster_path: string | null; title?: string; original_title?: string };
+
+function normalizeTitle(value: string) {
+  return value.toLocaleLowerCase()
+    .normalize("NFKD")
+    .replace(/[\\u0640\\u064B-\\u065F\\u0670]/g, "")
+    .replace(/[يى]/g, "ی")
+    .replace(/[ك]/g, "ک")
+    .replace(/[^\\p{L}\\p{N}]+/gu, "");
+}
 
 async function findPoster(queryText: string, language: string, token: string) {
   const params = new URLSearchParams({ query: queryText, language, include_adult: "false" });
   const response = await fetch(`https://api.themoviedb.org/3/search/movie?${params}`, {
     headers: { Authorization: `Bearer ${token}`, accept: "application/json" },
-    next: { revalidate: 86400 },
+    next: { revalidate: 3600 },
   });
   if (!response.ok) return null;
   const data = await response.json() as { results?: SearchResult[] };
   const results = data.results ?? [];
-  const normalized = queryText.toLocaleLowerCase();
-  const exact = results.find((item) =>
+  const normalized = normalizeTitle(queryText);
+  const match = results.find((item) =>
     item.poster_path &&
-    [item.title, item.original_title].some((name) => name?.toLocaleLowerCase() === normalized)
+    [item.title, item.original_title].some((name) => {
+      if (!name) return false;
+      const candidate = normalizeTitle(name);
+      return candidate === normalized ||
+        (normalized.length >= 5 && candidate.length >= 5 &&
+          (candidate.includes(normalized) || normalized.includes(candidate)));
+    })
   );
-  return exact?.poster_path ?? results.find((item => item.poster_path))?.poster_path ?? null;
+  return match?.poster_path ?? null;
 }
 
 export async function GET(request: Request) {
@@ -61,6 +76,6 @@ export async function GET(request: Request) {
   }));
 
   return NextResponse.json(Object.fromEntries(entries), {
-    headers: { "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800" },
+    headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" },
   });
 }
